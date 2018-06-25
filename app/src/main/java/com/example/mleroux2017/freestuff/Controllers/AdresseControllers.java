@@ -36,7 +36,7 @@ public class AdresseControllers {
                 });
     }
 
-    public List<Adresse> getAll(){
+   /* public List<Adresse> getAll(){
 
-    }
+    }*/
 }

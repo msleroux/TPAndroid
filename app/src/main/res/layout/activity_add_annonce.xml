@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.mleroux2017.freestuff.AddAnnonce">
+
+
+
+    <TextView
+        android:id="@+id/titre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Titre de l'annonce"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/editTitre"
+        app:layout_constraintBottom_toBottomOf="@id/editTitre"/>
+
+    <EditText
+        android:id="@+id/editTitre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/titre"
+        />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        app:layout_constraintTop_toTopOf="@id/editDescription"
+        app:layout_constraintLeft_toLeftOf="@id/titre"
+       app:layout_constraintRight_toRightOf="@id/titre"
+        app:layout_constraintBottom_toBottomOf="@id/editDescription"/>
+
+    <EditText
+        android:id="@+id/editDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        app:layout_constraintRight_toRightOf="@id/editTitre"
+        app:layout_constraintLeft_toLeftOf="@id/editTitre"
+        app:layout_constraintTop_toBottomOf="@id/editTitre"/>
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/radio_grp"
+        app:layout_constraintTop_toBottomOf="@id/editDescription"
+        app:layout_constraintLeft_toLeftOf="@id/titre"
+        app:layout_constraintRight_toRightOf="@id/editTitre"
+        android:gravity="center"
+        android:layout_marginTop="20dp">
+        <RadioButton android:id="@+id/radio_neuf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Neuf"
+            android:onClick="onRadioButtonClicked"/>
+        <RadioButton android:id="@+id/radio_bon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bon état"
+            android:onClick="onRadioButtonClicked"/>
+        <RadioButton android:id="@+id/radio_moyen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Etat Moyen"
+            android:onClick="onRadioButtonClicked"/>
+        <RadioButton android:id="@+id/radio_use"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Usé"
+            android:onClick="onRadioButtonClicked"/>
+    </RadioGroup>
+
+
+
+    <Button
+        android:id="@+id/btnValider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="VALIDER"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="300dp"
+        android:layout_height="290dp"
+        android:datePickerMode="spinner"
+        app:layout_constraintTop_toBottomOf="@id/radio_grp"
+        app:layout_constraintLeft_toLeftOf="@id/radio_grp"
+        app:layout_constraintRight_toRightOf="@id/radio_grp"/>
+
+</android.support.constraint.ConstraintLayout>
