@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
                                                    @Override
                                                    public void onGetValueListener(Categorie cat) {
                                                        Log.i("doc","main"+cat.getTitre());
+                                                       cat.setTitre("Electro");
+                                                       CategorieControllerFirebase.update(cat);
 
                                                    }
                                                },"Beaute");

@@ -49,7 +49,14 @@ public class CategorieControllerFirebase {
    }
 
    public static void update(Categorie cat){
-       
+       //on crée le nouvel objet à insérer
+       Map<String,Object> catToInsert = new HashMap<>();
+       catToInsert.put("titre",cat.getTitre());
+       //on update en donnant l'id de la catégorie à udpater et le nouvel objet à insérer
+       db.collection("categories")
+               .document(cat.getId())
+               .update(catToInsert);
+              
    }
 
     public static void getAll(final OnTabListener listener) {
@@ -87,9 +94,10 @@ public class CategorieControllerFirebase {
                        if (task.isSuccessful()) {
                            Categorie cat = new Categorie();
                            List<DocumentSnapshot> document = task.getResult().getDocuments();
-                            if(document.size()>0){
-                                cat.setTitre(document.get(1).getString("titre"));
-                                cat.setId(document.get(1).getId());
+                           //TODO vérifier un seul résultat - gérer si plusieurs results
+                            if(document.size()>0 && document.size()<2){
+                                cat.setTitre(document.get(0).getString("titre"));
+                                cat.setId(document.get(0).getId());
                                 Log.d("doc","value",task.getException());
                                 Log.d("doc", "exists", task.getException());
                             }
