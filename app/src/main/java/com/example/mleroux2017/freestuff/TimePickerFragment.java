@@ -3,6 +3,7 @@ package com.example.mleroux2017.freestuff;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.widget.TimePicker;
@@ -14,6 +15,13 @@ public class TimePickerFragment extends DialogFragment
 
     private EditTimeDialogListener listener;
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof EditTimeDialogListener){
+            listener=((EditTimeDialogListener) context);
+        }
+    }
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the current time as the default values for the picker
@@ -28,8 +36,14 @@ public class TimePickerFragment extends DialogFragment
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         // Do something with the time chosen by the user
+      sendTime(hourOfDay,minute);
+      //remove la boite de dialogue
+      this.dismiss();
+    }
+
+    //lance l'event du listener
+    public void sendTime(int hourOfDay, int minute) {
         listener.onFinishEditTimeDialog(hourOfDay,minute);
-        this.dismiss();
     }
 
     public interface EditTimeDialogListener {

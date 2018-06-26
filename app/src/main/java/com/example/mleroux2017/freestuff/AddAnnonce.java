@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.nfc.Tag;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,7 +34,9 @@ import java.util.List;
 
 import static android.R.layout.simple_spinner_item;
 
-public class AddAnnonce extends AppCompatActivity implements DatePickerFragment.EditDateDialogListener,TimePickerFragment.EditTimeDialogListener {
+public class AddAnnonce extends FragmentActivity implements
+        DatePickerFragment.EditDateDialogListener,
+        TimePickerFragment.EditTimeDialogListener {
 
     private int year;
     private int month;
@@ -144,12 +147,13 @@ public class AddAnnonce extends AppCompatActivity implements DatePickerFragment.
         this.day =day;
         this.month = month;
         this.year =year;
-
+        Log.i("onFinishEditDateDialog", "onFinishEditDateDialog: "+year+month+day);
     }
 
     @Override
     public void onFinishEditTimeDialog(int hour, int minute) {
         this.hour = hour;
         this.minute = minute;
+        Log.i("onFinishEditDateDialog", "onFinishEditDateDialog: "+hour+minute);
     }
 }

@@ -1,5 +1,8 @@
 package com.example.mleroux2017.freestuff;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class Adresse {
     private String id;
     private String rue;
