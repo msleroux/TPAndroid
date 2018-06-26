@@ -55,28 +55,81 @@
         app:layout_constraintLeft_toLeftOf="@id/titre"
         app:layout_constraintRight_toRightOf="@id/editTitre"
         android:gravity="center"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp">
         <RadioButton android:id="@+id/radio_neuf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Neuf"
-            android:onClick="onRadioButtonClicked"/>
+            android:text="Neuf" />
         <RadioButton android:id="@+id/radio_bon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bon état"
-            android:onClick="onRadioButtonClicked"/>
+            android:text="Bon état"/>
         <RadioButton android:id="@+id/radio_moyen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Etat Moyen"
-            android:onClick="onRadioButtonClicked"/>
+            android:text="Etat Moyen"/>
         <RadioButton android:id="@+id/radio_use"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Usé"
-            android:onClick="onRadioButtonClicked"/>
+            />
     </RadioGroup>
+
+
+
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date de l'échange"
+        app:layout_constraintTop_toTopOf="@id/btnDate"
+        app:layout_constraintLeft_toLeftOf="@id/titre"
+        app:layout_constraintRight_toRightOf="@id/titre"
+        app:layout_constraintBottom_toBottomOf="@id/btnDate"/>
+
+    <Button
+        android:id="@+id/btnTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pick_time"
+        android:layout_margin="20dp"
+        android:onClick="showTimePickerDialog"
+        app:layout_constraintLeft_toRightOf="@id/btnDate"
+        app:layout_constraintTop_toBottomOf="@id/radio_grp"/>
+
+    <Button
+        android:id="@+id/btnDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pick_date"
+        android:onClick="showDatePickerDialog"
+        app:layout_constraintLeft_toLeftOf="@id/editTitre"
+        app:layout_constraintRight_toLeftOf="@id/btnTime"
+        app:layout_constraintTop_toTopOf="@id/btnTime"/>
+
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="368dp"
+        android:backgroundTint="@color/prjBleu"
+        android:layout_height="wrap_content"
+       app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnTime"
+        app:layout_constraintBottom_toTopOf="@id/imageButton"/>
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:srcCompat="@drawable/add_address"
+        app:layout_constraintTop_toBottomOf="@id/spinner"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnValider"
+        />
 
 
 
@@ -88,17 +141,15 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="VALIDER"
+        android:onClick="onValiderAnnonceCliked"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageButton"/>
 
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="300dp"
-        android:layout_height="290dp"
-        android:datePickerMode="spinner"
-        app:layout_constraintTop_toBottomOf="@id/radio_grp"
-        app:layout_constraintLeft_toLeftOf="@id/radio_grp"
-        app:layout_constraintRight_toRightOf="@id/radio_grp"/>
+
+
+
+
 
 </android.support.constraint.ConstraintLayout>

@@ -1,12 +1,15 @@
 package com.example.mleroux2017.freestuff;
 
-import java.sql.Date;
 
+import org.parceler.Parcel;
+
+import java.util.Date;
+@Parcel
 public class Annonce {
     private String id;
     private String titre;
     private String description;
-    private boolean etatArticle;
+    private String etatArticle;
     private Date heureRDV;
     private Adresse adresseRDV;
     private Categorie categorieArticle;
@@ -14,7 +17,7 @@ public class Annonce {
     public Annonce() {
     }
 
-    public Annonce(String id, String titre, String description, boolean etatArticle, Categorie categorieArticle) {
+    public Annonce(String id, String titre, String description, String etatArticle, Categorie categorieArticle) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -22,7 +25,7 @@ public class Annonce {
         this.categorieArticle = categorieArticle;
     }
 
-    public Annonce(String id, String titre, String description, boolean etatArticle, Date heureRDV, Adresse adresseRDV, Categorie categorieArticle) {
+    public Annonce(String id, String titre, String description, String etatArticle, Date heureRDV, Adresse adresseRDV, Categorie categorieArticle) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -32,14 +35,22 @@ public class Annonce {
         this.categorieArticle = categorieArticle;
     }
 
-    public Annonce(String titre, String description, boolean etatArticle, Categorie categorieArticle) {
+    public Annonce(String titre, String description, String etatArticle, Categorie categorieArticle) {
         this.titre = titre;
         this.description = description;
         this.etatArticle = etatArticle;
         this.categorieArticle = categorieArticle;
     }
 
-    public Annonce(String titre, String description, boolean etatArticle, Date heureRDV, Adresse adresseRDV, Categorie categorieArticle) {
+    public Annonce(String titre, String description, String etatArticle, Categorie categorieArticle, Date date) {
+        this.titre = titre;
+        this.description = description;
+        this.etatArticle = etatArticle;
+        this.categorieArticle = categorieArticle;
+        this.heureRDV = date;
+    }
+
+    public Annonce(String titre, String description, String etatArticle, Date heureRDV, Adresse adresseRDV, Categorie categorieArticle) {
         this.titre = titre;
         this.description = description;
         this.etatArticle = etatArticle;
@@ -72,11 +83,11 @@ public class Annonce {
         this.description = description;
     }
 
-    public boolean isEtatArticle() {
+    public String getEtatArticle() {
         return etatArticle;
     }
 
-    public void setEtatArticle(boolean etatArticle) {
+    public void setEtatArticle(String etatArticle) {
         this.etatArticle = etatArticle;
     }
 

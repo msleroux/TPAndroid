@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">FreeStuff</string>
     <string name="bg_description">Photo giveaway</string>
+    <string name="pick_time">Heure</string>
+    <string name="pick_date">Date</string>
+
+
 </resources>
