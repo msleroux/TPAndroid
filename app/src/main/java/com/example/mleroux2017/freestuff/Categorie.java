@@ -1,9 +1,13 @@
 package com.example.mleroux2017.freestuff;
 
+import android.os.Parcelable;
+
 import org.parceler.Parcel;
 
+import java.io.Serializable;
+
 @Parcel
-public class Categorie {
+public class Categorie implements Serializable {
     private String id;
     private String titre;
 
@@ -34,4 +38,11 @@ public class Categorie {
     public void setTitre(String titre) {
         this.titre = titre;
     }
+
+    @Override
+    public String toString() {
+        return this.getTitre();
+    }
+
+
 }

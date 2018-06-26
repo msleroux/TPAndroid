@@ -4,6 +4,7 @@ package com.example.mleroux2017.freestuff;
 import org.parceler.Parcel;
 
 import java.util.Date;
+
 @Parcel
 public class Annonce {
     private String id;
@@ -113,5 +114,18 @@ public class Annonce {
 
     public void setCategorieArticle(Categorie categorieArticle) {
         this.categorieArticle = categorieArticle;
+    }
+
+    @Override
+    public String toString() {
+        return "Annonce{" +
+                "id='" + id + '\'' +
+                ", titre='" + titre + '\'' +
+                ", description='" + description + '\'' +
+                ", etatArticle='" + etatArticle + '\'' +
+                ", heureRDV=" + heureRDV +
+                ", adresseRDV=" + adresseRDV +
+                ", categorieArticle=" + categorieArticle.toString() +
+                '}';
     }
 }

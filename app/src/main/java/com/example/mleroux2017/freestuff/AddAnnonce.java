@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 
 
@@ -38,84 +39,91 @@ public class AddAnnonce extends FragmentActivity implements
         DatePickerFragment.EditDateDialogListener,
         TimePickerFragment.EditTimeDialogListener {
 
+    //attributs privés : sont modifié lorsqu'on utilise les datepicker
+    //sont vérifiables 0 ou valeur existe
+    //mis en attribut pour faire le lien entre les actions des event des pickers
+    // et l'action bouton valider
     private int year;
     private int month;
     private int day;
     private int hour;
     private int minute;
+
+
     private Spinner spinnerCat;
-    private List<Categorie> spinnerCatArray;
+    private List<Categorie> spinnerCatList;
+    private ArrayAdapter<Categorie> adapter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_annonce);
-        // initializing list
-        spinnerCatArray = new ArrayList<>();
 
         //**** HEURE PAR DEFAUT DU RDV;
         this.hour=9;
 
-
         //**** CREATION SPINNER POUR CATEGORIES *****
-        // set the spinner data programmatically, from a string array or list
+        // initializing a list
+        spinnerCatList = new ArrayList<>();
+
         // (1) get a reference to the spinner
         spinnerCat= findViewById(R.id.spinner);
 
-        // (2) Get data for your array or list = aller chercher les catégories via le controller
+        // (2) create adapter with your list (empty no worry)
+        adapter = new ArrayAdapter<Categorie>(AddAnnonce.this,
+                        simple_spinner_item,
+                        spinnerCatList
+                );
+
+        // (3) Get data and add item(object BO) in your ADAPTER
         CategorieControllerFirebase.getAll(new CategorieControllerFirebase.OnTabListener() {
             @Override
             public void onGetTabListener(ArrayList<Categorie> tab) {
-                spinnerCatArray.addAll(tab);
+                for (Categorie c:tab
+                     ) {
+                    adapter.add(c);
                 }
+            }
         });
 
-        // (3) create an adapter from the list
-        //@param : context;simple_spinner_item; your list
-        if(spinnerCatArray.size()>0) {
-            ArrayAdapter<Categorie> adapter = new ArrayAdapter<Categorie>(
-                    AddAnnonce.this,
-                    simple_spinner_item,
-                    spinnerCatArray
-                     );
-            // (4) set the adapter on the spinner
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerCat.setAdapter(adapter);
-            Log.i("spin","spinnerCatArray>0");
-        }else {
-                Log.i("spin","spinnerCatArray<0");
-        }
+        // (4) set adapter as the resource for spinner in your layout
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCat.setAdapter(adapter);
 
     }
 
-    public void onValiderAnnonceCliked(View view){
+    public void onValiderAnnonceCliked(View view) {
 
-       String titre = ((EditText)findViewById(R.id.editTitre)).getText().toString();
-       String description = ((EditText)findViewById(R.id.editDescription)).getText().toString();
-       RadioGroup rg = ((RadioGroup)findViewById(R.id.radio_grp));
-       String etatUsage = ((RadioButton)findViewById(rg.getCheckedRadioButtonId())).getText().toString();
-       Categorie categorie = (Categorie) spinnerCat.getSelectedItem();
-       // *** VERIFS infos
-        if (titre.length()<3){
-            Toast.makeText(AddAnnonce.this,"Le titre doit être renseigné et doit faire au moins 3 caractères",Toast.LENGTH_LONG).show();
-        } else if (description.length()<8){
-            Toast.makeText(AddAnnonce.this,"La description doit être renseignée et doit faire au moins 8 caractères",Toast.LENGTH_LONG).show();
-        } else if (etatUsage.length()<1){
-            Toast.makeText(AddAnnonce.this,"L'état de l'article doit être renseigné",Toast.LENGTH_LONG).show();
-        } else if (etatUsage.length()<1){
-        Toast.makeText(AddAnnonce.this,"L'état de l'article doit être renseigné",Toast.LENGTH_LONG).show();
-        } else if(this.year < Calendar.getInstance().get(Calendar.YEAR) && month<1 && day<1){
-            //l'année ne peut pas être passée, les int non renseignés seront à 0 par défaut
-            Toast.makeText(AddAnnonce.this,"La date doit être renseignée",Toast.LENGTH_LONG).show();
-        } else if( categorie == null) {
-            Toast.makeText(AddAnnonce.this,"La catégorie doit être renseignée",Toast.LENGTH_LONG).show();
-        } else {
-            Date date = getDateFromPicker();
-            Annonce annonce= new Annonce(titre,description,etatUsage,categorie,date);
-            Intent intent = new Intent();
-            intent.putExtra("annonce",Parcels.wrap(annonce));
-            setResult(Activity.RESULT_OK, intent);
-            finish();
-        }
+        String titre = ((EditText) findViewById(R.id.editTitre)).getText().toString();
+        String description = ((EditText) findViewById(R.id.editDescription)).getText().toString();
+        RadioGroup rg = ((RadioGroup) findViewById(R.id.radio_grp));
+        Categorie categorie = (Categorie) spinnerCat.getSelectedItem();
+
+            // *** VERIFS infos
+            if (titre.length() < 3) {
+                Toast.makeText(AddAnnonce.this, "Le titre doit être renseigné et doit faire au moins 3 caractères", Toast.LENGTH_LONG).show();
+            } else if (description.length() < 8) {
+                Toast.makeText(AddAnnonce.this, "La description doit être renseignée et doit faire au moins 8 caractères", Toast.LENGTH_LONG).show();
+            }else if ((rg.getCheckedRadioButtonId() == -1)) {
+                // si aucun radio button n'est selectionne, l'id checked est = -1
+                Toast.makeText(AddAnnonce.this, "L'état de l'article doit être renseigné", Toast.LENGTH_LONG).show();
+            } else if (this.year < Calendar.getInstance().get(Calendar.YEAR) && month < 1 && day < 1) {
+                //l'année ne peut pas être passée, les int non renseignés seront à 0 par défaut
+                Toast.makeText(AddAnnonce.this, "La date doit être renseignée", Toast.LENGTH_LONG).show();
+            } else if (categorie == null) {
+                Toast.makeText(AddAnnonce.this, "La catégorie doit être renseignée", Toast.LENGTH_LONG).show();
+            } else {
+                String etatUsage = ((RadioButton) findViewById(rg.getCheckedRadioButtonId())).getText().toString();
+                Date date = getDateFromPicker();
+
+                Annonce annonce = new Annonce(titre, description, etatUsage, categorie, date);
+                Log.i("annonce", "onActivityResult: "+annonce.toString());
+                Intent intent = new Intent();
+                intent.putExtra("annonce", Parcels.wrap(annonce));
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
 
     }
 

@@ -127,6 +127,15 @@ public class CategorieControllerFirebase {
        }
    }
 
+      /*  CategorieControllerFirebase.getByTitre(new CategorieControllerFirebase.OnValueListener() {
+                                                  @Override
+                                                   public void onGetValueListener(Categorie cat) {
+                                                       Log.i("doc","main"+cat.getTitre());
+                                                       cat.setTitre("Electro");
+                                                       CategorieControllerFirebase.update(cat);
+
+                                                   }
+                                               },"Beaute");*/
 
 
 
