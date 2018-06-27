@@ -9,22 +9,15 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.mleroux2017.freestuff.ControllersFirebase.AnnonceController;
-import com.example.mleroux2017.freestuff.ControllersFirebase.CategorieControllerFirebase;
+import com.example.mleroux2017.freestuff.ControllersFirebase.AnnonceControllerFirebase;
 import com.example.mleroux2017.freestuff.Objects.Adresse;
 import com.example.mleroux2017.freestuff.Objects.Annonce;
-import com.example.mleroux2017.freestuff.Objects.Categorie;
 import com.example.mleroux2017.freestuff.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
-import com.google.firebase.storage.FirebaseStorage;
 
 
 import org.parceler.Parcels;
-
-import java.util.ArrayList;
-
-import javax.security.auth.login.LoginException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -51,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent,123);
             }
         });
+
         ImageButton btnGoToListAnnonces = findViewById(R.id.liste_annonces);
         btnGoToListAnnonces.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         {Annonce annonce = Parcels.unwrap(data.getParcelableExtra("annonce"));
             Log.i("annonce", "onActivityResult: "+annonce.toString());
             Toast.makeText(MainActivity.this, "ResultOK "+annonce.getTitre(), Toast.LENGTH_SHORT).show();
-            AnnonceController aCtrl = new AnnonceController();
+            AnnonceControllerFirebase aCtrl = new AnnonceControllerFirebase();
             aCtrl.insert(annonce);
         }
 
