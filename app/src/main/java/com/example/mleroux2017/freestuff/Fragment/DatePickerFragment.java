@@ -1,4 +1,4 @@
-package com.example.mleroux2017.freestuff;
+package com.example.mleroux2017.freestuff.Fragment;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

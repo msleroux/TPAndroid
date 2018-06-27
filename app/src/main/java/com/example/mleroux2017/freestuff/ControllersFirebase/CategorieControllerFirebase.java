@@ -1,9 +1,10 @@
-package com.example.mleroux2017.freestuff.Controllers;
+package com.example.mleroux2017.freestuff.ControllersFirebase;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.example.mleroux2017.freestuff.Categorie;
+
+import com.example.mleroux2017.freestuff.Objects.Categorie;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -68,7 +69,7 @@ public class CategorieControllerFirebase {
                         if (task.isSuccessful()) {
                             ArrayList<Categorie> liste = new ArrayList<>();
                             for (DocumentSnapshot document : task.getResult()) {
-                                liste.add(new Categorie(document.getString("titre")));
+                                liste.add(new Categorie(document.getId(),document.getString("titre")));
                                 Log.d("doc", document.getId() + " => " + document.getData());
                             }
                             listener.onGetTabListener(liste);

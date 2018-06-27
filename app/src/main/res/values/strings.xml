@@ -3,6 +3,7 @@
     <string name="bg_description">Photo giveaway</string>
     <string name="pick_time">Heure</string>
     <string name="pick_date">Date</string>
-
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Rien n\'est sélectionné</string>
 
 </resources>

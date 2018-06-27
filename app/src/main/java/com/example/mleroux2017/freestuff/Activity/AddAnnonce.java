@@ -1,4 +1,4 @@
-package com.example.mleroux2017.freestuff;
+package com.example.mleroux2017.freestuff.Activity;
 
 import android.app.Activity;
 import android.app.DialogFragment;
@@ -9,24 +9,32 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
+
 import android.widget.ArrayAdapter;
 
 
-import android.widget.DatePicker;
+
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.mleroux2017.freestuff.Controllers.CategorieControllerFirebase;
-import com.example.mleroux2017.myapplication.R;
+
+import com.example.mleroux2017.freestuff.ControllersFirebase.AdresseControllersFirebase;
+import com.example.mleroux2017.freestuff.ControllersFirebase.CategorieControllerFirebase;
+import com.example.mleroux2017.freestuff.Fragment.DatePickerFragment;
+import com.example.mleroux2017.freestuff.Fragment.TimePickerFragment;
+import com.example.mleroux2017.freestuff.Objects.Adresse;
+import com.example.mleroux2017.freestuff.Objects.Annonce;
+import com.example.mleroux2017.freestuff.Objects.Categorie;
+import com.example.mleroux2017.freestuff.R;
+
 
 import org.parceler.Parcels;
 
-import java.time.LocalDate;
-import java.time.Month;
+
 import java.util.ArrayList;
 
 import java.util.Calendar;
@@ -37,7 +45,7 @@ import static android.R.layout.simple_spinner_item;
 
 public class AddAnnonce extends FragmentActivity implements
         DatePickerFragment.EditDateDialogListener,
-        TimePickerFragment.EditTimeDialogListener {
+       TimePickerFragment.EditTimeDialogListener {
 
     //attributs privés : sont modifié lorsqu'on utilise les datepicker
     //sont vérifiables 0 ou valeur existe
@@ -49,6 +57,7 @@ public class AddAnnonce extends FragmentActivity implements
     private int hour;
     private int minute;
 
+    private Adresse adresseForAnnonce;
 
     private Spinner spinnerCat;
     private List<Categorie> spinnerCatList;
@@ -80,7 +89,7 @@ public class AddAnnonce extends FragmentActivity implements
         CategorieControllerFirebase.getAll(new CategorieControllerFirebase.OnTabListener() {
             @Override
             public void onGetTabListener(ArrayList<Categorie> tab) {
-                for (Categorie c:tab
+                for (Categorie c :tab
                      ) {
                     adapter.add(c);
                 }
@@ -90,6 +99,15 @@ public class AddAnnonce extends FragmentActivity implements
         // (4) set adapter as the resource for spinner in your layout
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCat.setAdapter(adapter);
+
+        ImageButton btnAjoutAdresse = findViewById(R.id.btnAdresse);
+        btnAjoutAdresse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddAnnonce.this,CreateAdresseActivity.class);
+                startActivityForResult(intent,765);
+            }
+        });
 
     }
 
@@ -118,7 +136,10 @@ public class AddAnnonce extends FragmentActivity implements
                 Date date = getDateFromPicker();
 
                 Annonce annonce = new Annonce(titre, description, etatUsage, categorie, date);
-                Log.i("annonce", "onActivityResult: "+annonce.toString());
+                if(adresseForAnnonce!=null){
+                    annonce.setAdresseRDV(adresseForAnnonce);
+                }
+                Log.i("annonce", "onActivityResult: ");
                 Intent intent = new Intent();
                 intent.putExtra("annonce", Parcels.wrap(annonce));
                 setResult(Activity.RESULT_OK, intent);
@@ -128,18 +149,20 @@ public class AddAnnonce extends FragmentActivity implements
     }
 
 
-
+    //ouverture boite de dialog au clic bouton
     public void showTimePickerDialog(View view) {
         DialogFragment newFragment = new TimePickerFragment();
         newFragment.show(getFragmentManager(), "timePicker");
     }
 
+    //ouverture boite de dialog au clic bouton
     public void showDatePickerDialog(View view){
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getFragmentManager(), "datePicker");
 
     }
 
+    //construction de la date JavaUtil à partir des entiers récupérés
     public Date getDateFromPicker() {
         //on récupère la date à partir des attributs settés avec les boite de dialog
         Calendar calendar = Calendar.getInstance();
@@ -163,5 +186,24 @@ public class AddAnnonce extends FragmentActivity implements
         this.hour = hour;
         this.minute = minute;
         Log.i("onFinishEditDateDialog", "onFinishEditDateDialog: "+hour+minute);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==765 && resultCode == Activity.RESULT_OK){
+            adresseForAnnonce = Parcels.unwrap(data.getParcelableExtra("adresseRetour"));
+            AdresseControllersFirebase adrC = new AdresseControllersFirebase();
+            adrC.insert(adresseForAnnonce, new AdresseControllersFirebase.OnCreateListener() {
+                @Override
+                public void onCreateListener(String idAdresse) {
+                    if(!idAdresse.equalsIgnoreCase("failure")){
+                       adresseForAnnonce.setId(idAdresse);
+                    }
+                }
+            });
+        }else if(requestCode==765 && resultCode == Activity.RESULT_CANCELED){
+            adresseForAnnonce = null;
+        }
     }
 }

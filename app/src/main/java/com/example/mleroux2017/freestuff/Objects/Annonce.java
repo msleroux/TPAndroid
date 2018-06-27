@@ -1,5 +1,8 @@
-package com.example.mleroux2017.freestuff;
+package com.example.mleroux2017.freestuff.Objects;
 
+
+import com.example.mleroux2017.freestuff.Objects.Categorie;
+import com.example.mleroux2017.freestuff.Objects.Adresse;
 
 import org.parceler.Parcel;
 
@@ -14,7 +17,10 @@ public class Annonce {
     private Date heureRDV;
     private Adresse adresseRDV;
     private Categorie categorieArticle;
-
+	private String id_auteur;
+    private boolean etatAnnonce;
+	
+	
     public Annonce() {
     }
 
@@ -60,6 +66,47 @@ public class Annonce {
         this.categorieArticle = categorieArticle;
     }
 
+
+
+
+	
+	/* public Annonce(String id, String titre, String description, String etatArticle, String id_CategorieArticle) {
+        this.id = id;
+        this.titre = titre;
+        this.description = description;
+        this.etatArticle = etatArticle;
+        this.id_CategorieArticle = id_CategorieArticle;
+    }
+
+    public Annonce(String id, String titre, String description, String etatArticle, Date heureRDV, String id_adresseRDV, String id_CategorieArticle) {
+        this.id = id;
+        this.titre = titre;
+        this.description = description;
+        this.etatArticle = etatArticle;
+        this.heureRDV = heureRDV;
+        this.id_AdresseRDV = id_adresseRDV;
+        this.id_CategorieArticle = id_CategorieArticle;
+    }
+
+    public Annonce(String titre, String description, String etatArticle, String categorieArticle) {
+        this.titre = titre;
+        this.description = description;
+        this.etatArticle = etatArticle;
+        this.id_CategorieArticle = categorieArticle;
+    }
+
+    public Annonce(String titre, String description, String etatArticle, Date heureRDV, String id_adresseRDV, String id_CategorieArticle) {
+        this.titre = titre;
+        this.description = description;
+        this.etatArticle = etatArticle;
+        this.heureRDV = heureRDV;
+        this.id_AdresseRDV = id_adresseRDV;
+        this.id_CategorieArticle = id_CategorieArticle;
+    }*/
+	
+	
+	
+	
     public String getId() {
         return id;
     }

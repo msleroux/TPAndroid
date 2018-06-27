@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.mleroux2017.freestuff.MainActivity">
+    tools:context="com.example.mleroux2017.freestuff.Activity.MainActivity">
 
 
     <ImageView
@@ -15,7 +15,6 @@
         android:contentDescription="@string/bg_description"
         android:cropToPadding="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/give"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,18 +33,31 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btnVoirAnnonce"
+        app:layout_constraintRight_toLeftOf="@id/liste_annonces"
         app:srcCompat="@android:drawable/ic_menu_add" />
 
     <ImageButton
-        android:id="@+id/btnVoirAnnonce"
+        android:id="@+id/ajout_adresse"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:background="@color/prjVert"
+        android:src="@android:drawable/ic_dialog_map"
+        android:text="Ajout Adresse"
+        app:layout_constraintLeft_toLeftOf="@id/liste_annonces"
+        app:layout_constraintRight_toRightOf="@id/liste_annonces"
+        app:layout_constraintTop_toBottomOf="@id/liste_annonces"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+		
+    <ImageButton
+        android:id="@+id/liste_annonces"
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:background="@color/colorAccent"
-        android:onClick="onClickVoirAnnonce"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/ajout_adresse"
         app:layout_constraintLeft_toRightOf="@id/btnAddAnnonce"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"

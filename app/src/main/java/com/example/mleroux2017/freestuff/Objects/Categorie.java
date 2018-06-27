@@ -1,4 +1,4 @@
-package com.example.mleroux2017.freestuff;
+package com.example.mleroux2017.freestuff.Objects;
 
 import android.os.Parcelable;
 

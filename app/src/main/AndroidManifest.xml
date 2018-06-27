@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mleroux2017.myapplication">
+    package="com.example.mleroux2017.freestuff">
 
     <application
         android:allowBackup="true"
@@ -9,14 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.mleroux2017.freestuff.MainActivity">
+
+        <activity android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.mleroux2017.freestuff.AddAnnonce"></activity>
+        <activity android:name=".Activity.AddAnnonce"></activity>
+		<activity android:name=".Activity.CreateAdresseActivity" />
+        <activity android:name=".Activity.DetailActivity" />
+        <activity android:name=".Activity.ResultActivity"></activity>
 
     </application>
 
