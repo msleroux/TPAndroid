@@ -1,5 +1,6 @@
 package com.example.mleroux2017.freestuff.dummy;
 
+import com.example.mleroux2017.freestuff.ControllersFirebase.AnnonceControllerFirebase;
 import com.example.mleroux2017.freestuff.Objects.Annonce;
 import com.example.mleroux2017.freestuff.Objects.Categorie;
 
@@ -26,17 +27,23 @@ public class DummyContent {
      */
     public static final Map<String, Annonce> ITEM_MAP = new HashMap<String, Annonce>();
 
-    private static final int COUNT = 25;
+    //private static final int COUNT = 25;
 
-    static {
-        // Add some sample items.
-
-        for (int i = 1; i <= COUNT; i++) {
-            addItem(createDummyItem(i));
-        }
+    public void init(){
+        AnnonceControllerFirebase acf = new AnnonceControllerFirebase();
+        acf.getAll(new AnnonceControllerFirebase.OnTabListener() {
+            @Override
+            public void onGetTabListener(ArrayList<Annonce> tab) {
+                if(tab.size()>0){
+                    for (int i = 1; i <= tab.size(); i++) {
+                        addItem(tab.get(i));
+                    }
+                }
+            }
+        });
     }
 
-    private static void addItem(Annonce item) {
+      private static void addItem(Annonce item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.getId(), item);
     }

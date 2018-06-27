@@ -14,7 +14,8 @@ import org.parceler.Parcels;
 
 public class ResultActivity extends AppCompatActivity implements
         AnnonceFragment.OnListFragmentInteractionListener,
-        DetailFragment.OnFragmentInteractionListener {
+        DetailFragment.OnFragmentInteractionListener
+        {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

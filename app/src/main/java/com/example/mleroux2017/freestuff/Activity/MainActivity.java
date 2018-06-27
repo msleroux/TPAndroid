@@ -6,9 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.mleroux2017.freestuff.ControllersFirebase.AdresseControllersFirebase;
 import com.example.mleroux2017.freestuff.ControllersFirebase.AnnonceControllerFirebase;
 import com.example.mleroux2017.freestuff.Objects.Adresse;
 import com.example.mleroux2017.freestuff.Objects.Annonce;
@@ -36,20 +38,28 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         db.setFirestoreSettings(settings);
 
-		ImageButton btnAjoutAdresse = findViewById(R.id.ajout_adresse);
-        btnAjoutAdresse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,CreateAdresseActivity.class);
-                startActivityForResult(intent,123);
-            }
-        });
-
-        ImageButton btnGoToListAnnonces = findViewById(R.id.liste_annonces);
+		ImageButton btnGoToListAnnonces = findViewById(R.id.liste_annonces);
         btnGoToListAnnonces.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,ResultActivity.class);
+                startActivity(intent);
+            }
+        });
+		
+        Button btnGoToMyAccount = findViewById(R.id.my_account);
+        btnGoToMyAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,MyAccountActivity.class);
+                startActivity(intent);
+            }
+        });
+        Button btnGoToCameraControl = findViewById(R.id.gestion_camera);
+        btnGoToCameraControl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,TestCameraActivity.class);
                 startActivity(intent);
             }
         });
@@ -72,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 		 //ajout adresse
 		 if(requestCode==123 && resultCode == Activity.RESULT_OK){
 					adresseForAnnonce = Parcels.unwrap(data.getParcelableExtra("adresseRetour"));
-		}else if(requestCode==123 && resultCode == Activity.RESULT_CANCELED){
+		 }else if(requestCode==123 && resultCode == Activity.RESULT_CANCELED){
 					adresseForAnnonce = null;
 		}
 
@@ -80,9 +90,9 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 987 && resultCode == Activity.RESULT_OK)
         {Annonce annonce = Parcels.unwrap(data.getParcelableExtra("annonce"));
             Log.i("annonce", "onActivityResult: "+annonce.toString());
-            Toast.makeText(MainActivity.this, "ResultOK "+annonce.getTitre(), Toast.LENGTH_SHORT).show();
             AnnonceControllerFirebase aCtrl = new AnnonceControllerFirebase();
             aCtrl.insert(annonce);
+            Toast.makeText(MainActivity.this, "ResultOK "+annonce.getTitre(), Toast.LENGTH_SHORT).show();
         }
 
     }

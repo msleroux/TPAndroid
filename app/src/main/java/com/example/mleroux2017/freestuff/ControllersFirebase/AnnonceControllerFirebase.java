@@ -97,16 +97,26 @@ public class AnnonceControllerFirebase {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             ArrayList<Annonce> liste = new ArrayList<>();
-                            for (DocumentSnapshot document : task.getResult()) {
+                            for (DocumentSnapshot doc : task.getResult()) {
+                                //TODO create constructeur sans cat sans adresse
                                 liste.add(new Annonce(
-                                        document.getId(),
-                                        document.getString("titre"),
-                                        document.getString("description"),
-                                        document.getString("etatArticle"),
-                                        document.getDate("heureRDV"),
-                                        (Adresse)document.get("Adresse"),
-                                        (Categorie)document.get("categorieArticle")
+
+                                        doc.getId(),
+                                        doc.getString("titre"),
+                                        doc.getString("description"),
+                                        doc.getString("etatArticle"),
+                                        doc.getDate("heureRDV")
+
                                         ));
+                                //TODO faire query séparée pour récupérer cat et adr à partir de la ref
+                                task.addOnSuccessListener()
+                                (Categorie)document.get("categorieArticle")
+                                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        City city = documentSnapshot.toObject(City.class);
+                                    }
+                                });
                                 Log.d("doc", document.getId() + " => " + document.getData());
                             }
                             listener.onGetTabListener(liste);
@@ -123,7 +133,7 @@ public class AnnonceControllerFirebase {
 
 
 
-    public void getListByTitre(final AnnonceControllerFirebase.OnValueListener listener, String libelle) {
+    public void getListByTitre(final AnnonceControllerFirebase.OnTabListener listener, String libelle) {
         db.collection("annonces")
                 .orderBy("titre")
                 .startAt(libelle)
@@ -150,7 +160,7 @@ public class AnnonceControllerFirebase {
 
                             }
                             Log.d("doc", "listener", task.getException());
-                            listener.onGetValueListener(listeResults);
+                            listener.onGetTabListener(listeResults);
 
                         } else {
                             Log.d("doc", "Error getting document.", task.getException());

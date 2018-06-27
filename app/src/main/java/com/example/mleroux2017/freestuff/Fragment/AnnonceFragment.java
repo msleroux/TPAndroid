@@ -69,7 +69,9 @@ public class AnnonceFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            recyclerView.setAdapter(new MyAnnonceRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            DummyContent dc = new DummyContent();
+            dc.init();
+            recyclerView.setAdapter(new MyAnnonceRecyclerViewAdapter(dc.ITEMS, mListener));
         }
         return view;
     }
