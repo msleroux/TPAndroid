@@ -2,9 +2,8 @@ package com.example.mleroux2017.freestuff.ControllersFirebase;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.example.mleroux2017.freestuff.Activity.AddAnnonce;
+import com.example.mleroux2017.freestuff.Objects.Adresse;
 import com.example.mleroux2017.freestuff.Objects.Annonce;
 import com.example.mleroux2017.freestuff.Objects.Categorie;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,10 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.security.auth.login.LoginException;
 
-
-public class AnnonceController {
+public class AnnonceControllerFirebase {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     final static String TAG="aCtr";
@@ -79,11 +76,12 @@ public class AnnonceController {
         annToInsert.put("description",ann.getDescription());
         annToInsert.put("etatArticle",ann.getEtatArticle());
         annToInsert.put("heureRDV",ann.getHeureRDV());
-        if(ann.getAdresseRDV()!= null){
-            DocumentReference adresseRef = db.collection("adresses").document(a.getAdresseRDV().getId());
+        if(ann.getAdresseRDV().getId()!= null){
+            DocumentReference adresseRef = db.collection("adresses").document(ann.getAdresseRDV().getId());
             annToInsert.put("Addresse",adresseRef);
+
         }
-        //TODO verifier id user identique ? afficher le bouton modifier que dans "mes annonces"
+        //TODO verifier id user identique ? afficher le bouton modifier que dans "mes annonces" ?
 
         //on update en donnant l'id de la catégorie à udpater et le nouvel objet à insérer
         db.collection("annonces")
@@ -91,14 +89,14 @@ public class AnnonceController {
                 .update(annToInsert);
     }
 
-    public void getAll(final AnnonceController.OnTabListener listener) {
+    public void getAll(final AnnonceControllerFirebase.OnTabListener listener) {
         db.collection("annonces")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            ArrayList<Categorie> liste = new ArrayList<>();
+                            ArrayList<Annonce> liste = new ArrayList<>();
                             for (DocumentSnapshot document : task.getResult()) {
                                 liste.add(new Annonce(
                                         document.getId(),
@@ -106,6 +104,8 @@ public class AnnonceController {
                                         document.getString("description"),
                                         document.getString("etatArticle"),
                                         document.getDate("heureRDV"),
+                                        (Adresse)document.get("Adresse"),
+                                        (Categorie)document.get("categorieArticle")
                                         ));
                                 Log.d("doc", document.getId() + " => " + document.getData());
                             }
@@ -118,29 +118,39 @@ public class AnnonceController {
     }
 
     public interface OnTabListener{
-        void onGetTabListener(ArrayList<Categorie> tab);
+        void onGetTabListener(ArrayList<Annonce> tab);
     }
 
 
 
-    public void getByTitre(final CategorieControllerFirebase.OnValueListener listener, String libelle) {
-        db.collection("categories").whereEqualTo("titre",libelle)
+    public void getListByTitre(final AnnonceControllerFirebase.OnValueListener listener, String libelle) {
+        db.collection("annonces")
+                .orderBy("titre")
+                .startAt(libelle)
+                .endAt(libelle+'\uf8ff')
+                .limit(10)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            Categorie cat = new Categorie();
-                            List<DocumentSnapshot> document = task.getResult().getDocuments();
-                            //TODO vérifier un seul résultat - gérer si plusieurs results
-                            if(document.size()>0 && document.size()<2){
-                                cat.setTitre(document.get(0).getString("titre"));
-                                cat.setId(document.get(0).getId());
-                                Log.d("doc","value",task.getException());
-                                Log.d("doc", "exists", task.getException());
+                             ArrayList<Annonce> listeResults = new ArrayList<Annonce> ();
+                             List<DocumentSnapshot> documents = task.getResult().getDocuments();
+                             if(documents.size()>0){
+                                 for (int i = 0; i < documents.size(); i++)
+                                 {  listeResults.add(new Annonce(
+                                         documents.get(i).getId(),
+                                         documents.get(i).getString("titre"),
+                                         documents.get(i).getString("description"),
+                                         documents.get(i).getString("etatArticle"),
+                                         documents.get(i).getDate("heureRDV"),
+                                         (Adresse)documents.get(i).get("Adresse"),
+                                         (Categorie)documents.get(i).get("categorieArticle")));
+                                 }
+
                             }
                             Log.d("doc", "listener", task.getException());
-                            listener.onGetValueListener(cat);
+                            listener.onGetValueListener(listeResults);
 
                         } else {
                             Log.d("doc", "Error getting document.", task.getException());
@@ -151,19 +161,18 @@ public class AnnonceController {
     }
 
     public interface OnValueListener{
-        void onGetValueListener(Categorie cat);
+        void onGetValueListener(List<Annonce> liste);
     }
 
-
-
-    public static void delete(Categorie cat){
-        if(cat.getId()!=null){
-            db.collection("categories").document(cat.getId()).delete();
+    public void delete(Annonce a){
+        if(a.getId()!=null){
+            db.collection("categories").document(a.getId()).delete();
 
         }else {
             Log.i("doc","id null impossible de suprimer cette catégorie");
         }
     }
+
 
 
 }

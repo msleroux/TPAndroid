@@ -3,6 +3,7 @@ package com.example.mleroux2017.freestuff.Objects;
 
 import com.example.mleroux2017.freestuff.Objects.Categorie;
 import com.example.mleroux2017.freestuff.Objects.Adresse;
+import com.google.firebase.firestore.ServerTimestamp;
 
 import org.parceler.Parcel;
 
@@ -14,7 +15,10 @@ public class Annonce {
     private String titre;
     private String description;
     private String etatArticle;
+
+    @ServerTimestamp
     private Date heureRDV;
+
     private Adresse adresseRDV;
     private Categorie categorieArticle;
 	private String id_auteur;
