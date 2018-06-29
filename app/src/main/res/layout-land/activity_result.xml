@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <fragment
+    <FrameLayout
         android:id="@+id/first"
-        android:name="com.example.mleroux2017.freestuff.Fragment.AnnonceFragment"
         android:layout_width="180dp"
+        android:background="@color/prjBleu"
         android:layout_height="match_parent"/>
 
     <fragment

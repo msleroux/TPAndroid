@@ -1,6 +1,11 @@
 package com.example.mleroux2017.freestuff.Objects;
 
 
+import android.os.Parcelable;
+import android.util.Log;
+
+import com.example.mleroux2017.freestuff.ControllersFirebase.AdresseControllersFirebase;
+import com.example.mleroux2017.freestuff.ControllersFirebase.CategorieControllerFirebase;
 import com.example.mleroux2017.freestuff.Objects.Categorie;
 import com.example.mleroux2017.freestuff.Objects.Adresse;
 import com.google.firebase.firestore.ServerTimestamp;
@@ -23,7 +28,9 @@ public class Annonce {
     private Categorie categorieArticle;
 	private String id_auteur;
     private boolean etatAnnonce;
-	
+
+    private String idAdresse;
+    private String idCategorie;
 	
     public Annonce() {
     }
@@ -70,9 +77,57 @@ public class Annonce {
         this.categorieArticle = categorieArticle;
     }
 
+    public Annonce(String id, String titre, String description, String etatArticle, Date heureRDV) {
+        this.id = id;
+        this.titre = titre;
+        this.description = description;
+        this.etatArticle = etatArticle;
+        this.heureRDV = heureRDV;
+    }
+
+
+    public String getIdAdresse() {
+        return idAdresse;
+    }
+
+    public void setIdAdresse(String idAdresse) {
+        this.idAdresse = idAdresse;
+    }
+
+    public String getIdCategorie() {
+        return idCategorie;
+    }
+
+    public void setIdCategorie(String idCategorie) {
+        this.idCategorie = idCategorie;
+    }
 
 
 
+    public void searchAdresseById(){
+        AdresseControllersFirebase adc = new AdresseControllersFirebase();
+        if(this.idAdresse!=null){
+        adc.getById(this.idAdresse, new AdresseControllersFirebase.OnSingleListener() {
+            @Override
+            public void onSingleListener(Adresse adr) {
+                Log.i("test", "onSingleListener: "+adr);
+               setAdresseRDV(adr);
+            }
+        });
+        }
+    }
+
+    public void searchCategorieById() {
+        if (this.idCategorie != null) {
+            CategorieControllerFirebase.getById(this.idCategorie, new CategorieControllerFirebase.OnValueListener() {
+                @Override
+                public void onGetValueListener(Categorie cat) {
+
+                    setCategorieArticle(cat);
+                }
+            });
+        }
+    }
 	
 	/* public Annonce(String id, String titre, String description, String etatArticle, String id_CategorieArticle) {
         this.id = id;
@@ -107,8 +162,8 @@ public class Annonce {
         this.id_AdresseRDV = id_adresseRDV;
         this.id_CategorieArticle = id_CategorieArticle;
     }*/
-	
-	
+
+
 	
 	
     public String getId() {
@@ -169,6 +224,7 @@ public class Annonce {
 
     @Override
     public String toString() {
+
         return "Annonce{" +
                 "id='" + id + '\'' +
                 ", titre='" + titre + '\'' +
@@ -176,7 +232,9 @@ public class Annonce {
                 ", etatArticle='" + etatArticle + '\'' +
                 ", heureRDV=" + heureRDV +
                 ", adresseRDV=" + adresseRDV +
-                ", categorieArticle=" + categorieArticle.toString() +
+                ", categorieArticle=" + categorieArticle+
                 '}';
     }
+
+
 }

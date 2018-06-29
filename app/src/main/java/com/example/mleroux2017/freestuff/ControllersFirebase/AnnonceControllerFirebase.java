@@ -29,13 +29,20 @@ public class AnnonceControllerFirebase {
    // final static String COLLECTION="annnonces";
     private FirebaseAuth dbAuth = FirebaseAuth.getInstance();
 
+    //attributs pour setter des valeurs avec les listener dans les "join" (pas de join en firebase)
+    private Annonce a;
+
+
+
+
+
+    // *****  METHODES *****
     public void insert(Annonce a){
         Map<String, Object> annonce = new HashMap<>();
         annonce.put("titre",a.getTitre());
         annonce.put("description",a.getDescription());
         annonce.put("etatArticle",a.getEtatArticle());
         annonce.put("heureRDV",a.getHeureRDV());
-
         if(dbAuth.getCurrentUser()!=null) {
             String userId = dbAuth.getCurrentUser().getUid();
             annonce.put("idAuteur", userId);
@@ -46,7 +53,6 @@ public class AnnonceControllerFirebase {
                 DocumentReference adresseRef = db.collection("adresses").document(a.getAdresseRDV().getId());
                 annonce.put("Addresse",adresseRef);
             }
-
             db.collection("annonces")
                     .add(annonce)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -61,7 +67,6 @@ public class AnnonceControllerFirebase {
                             Log.i(TAG, "onFailure: ");
                         }
                     });
-
         }else {
             //pas de current user
             Log.i("annonce","utilisateur non authentifié ");
@@ -81,13 +86,12 @@ public class AnnonceControllerFirebase {
             annToInsert.put("Addresse",adresseRef);
 
         }
-        //TODO verifier id user identique ? afficher le bouton modifier que dans "mes annonces" ?
-
         //on update en donnant l'id de la catégorie à udpater et le nouvel objet à insérer
         db.collection("annonces")
                 .document(ann.getId())
                 .update(annToInsert);
     }
+
 
     public void getAll(final AnnonceControllerFirebase.OnTabListener listener) {
         db.collection("annonces")
@@ -97,31 +101,54 @@ public class AnnonceControllerFirebase {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             ArrayList<Annonce> liste = new ArrayList<>();
-                            for (DocumentSnapshot doc : task.getResult()) {
-                                //TODO create constructeur sans cat sans adresse
-                                liste.add(new Annonce(
+                            List<DocumentSnapshot> docs = task.getResult().getDocuments();
+                            for (int i = 0; i < docs.size(); i++) {
+                                a = new Annonce(
+                                        docs.get(i).getId(),
+                                        docs.get(i).getString("titre"),
+                                        docs.get(i).getString("description"),
+                                        docs.get(i).getString("etatArticle"),
+                                        docs.get(i).getDate("heureRDV"));
+                                String pathCat = docs.get(i).getDocumentReference("categorieArticle").getPath();
+                                String[] itemsCat = pathCat.split("/");
+                                a.setIdCategorie(itemsCat[1]);
 
-                                        doc.getId(),
-                                        doc.getString("titre"),
-                                        doc.getString("description"),
-                                        doc.getString("etatArticle"),
-                                        doc.getDate("heureRDV")
-
-                                        ));
-                                //TODO faire query séparée pour récupérer cat et adr à partir de la ref
-                                task.addOnSuccessListener()
-                                (Categorie)document.get("categorieArticle")
-                                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                        City city = documentSnapshot.toObject(City.class);
-                                    }
-                                });
-                                Log.d("doc", document.getId() + " => " + document.getData());
+                                if(docs.get(i).getDocumentReference("Addresse")!=null){
+                                   String pathAdd = docs.get(i).getDocumentReference("Addresse").getPath();
+                                   String[] itemsAdd = pathAdd.split("/");
+                                   a.setIdAdresse(itemsAdd[1]);
+                                }
+                               liste.add(a);
                             }
+
                             listener.onGetTabListener(liste);
+                            Log.i(TAG, "liste: "+liste.toString());
+
                         } else {
                             Log.w("doc", "Error getting documents.", task.getException());
+                        }
+                    }});
+    }
+
+
+    public void getById(String idAnnonce, final AnnonceControllerFirebase.OnSingleListener listener){
+        db.collection("annonces").document(idAnnonce)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.isSuccessful()){
+                            DocumentSnapshot document = task.getResult();
+                            if(document.exists()){
+                                Annonce a = new Annonce(
+                                        document.getId(),
+                                    document.getString("titre"),
+                                        document.getString("description"),
+                                            document.getString("etatArticle"),
+                                            document.getDate("heureRDV"));
+                                listener.onGetValueListener(a);
+                            }
+
                         }
                     }
                 });
@@ -133,7 +160,7 @@ public class AnnonceControllerFirebase {
 
 
 
-    public void getListByTitre(final AnnonceControllerFirebase.OnTabListener listener, String libelle) {
+    public void getListByTitre(String libelle,final AnnonceControllerFirebase.OnTabListener listener) {
         db.collection("annonces")
                 .orderBy("titre")
                 .startAt(libelle)
@@ -157,7 +184,7 @@ public class AnnonceControllerFirebase {
                                          (Adresse)documents.get(i).get("Adresse"),
                                          (Categorie)documents.get(i).get("categorieArticle")));
                                  }
-
+                                //TODO sinon
                             }
                             Log.d("doc", "listener", task.getException());
                             listener.onGetTabListener(listeResults);
@@ -172,6 +199,10 @@ public class AnnonceControllerFirebase {
 
     public interface OnValueListener{
         void onGetValueListener(List<Annonce> liste);
+    }
+
+    public interface OnSingleListener{
+        void onGetValueListener(Annonce a);
     }
 
     public void delete(Annonce a){

@@ -3,10 +3,10 @@
     <string name="bg_description">Photo giveaway</string>
     <string name="pick_time">Heure</string>
     <string name="pick_date">Date</string>
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Rien n\'est sélectionné</string>
 
-	
+
     <string name="action_sign_in_short">Register</string>
     <string name="email">Email</string>
     <string name="minimum_password">Password too short, enter minimum 6 characters!</string>

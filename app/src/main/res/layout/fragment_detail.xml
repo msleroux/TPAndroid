@@ -18,8 +18,19 @@
         android:layout_marginRight="30dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btn_tgl_favorite"
         app:layout_constraintTop_toBottomOf="@id/detail_annonce_titre"/>
+
+    <ToggleButton
+        android:id="@+id/btn_tgl_favorite"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:textOff=" "
+        android:textOn=" "
+        app:layout_constraintRight_toRightOf="@id/detail_annonce_image"
+        app:layout_constraintTop_toTopOf="@id/detail_annonce_titre"
+        app:layout_constraintBottom_toBottomOf="@id/detail_annonce_titre"
+        android:background="@android:drawable/btn_star"/>
 
     <ImageView
         android:id="@+id/detail_annonce_image"
@@ -55,6 +66,20 @@
         app:layout_constraintLeft_toRightOf="@id/detail_annonce_label_etat"
         app:layout_constraintBottom_toBottomOf="@id/detail_annonce_label_etat"
         />
+
+    <ImageButton
+        android:id="@+id/btn_gotoMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        app:layout_constraintRight_toRightOf="@id/detail_annonce_image"
+        app:layout_constraintTop_toTopOf="@id/detail_annonce_label_etat"
+        app:layout_constraintBottom_toBottomOf="@id/detail_annonce_label_description"
+        android:src="@android:drawable/ic_dialog_map" />
 
     <TextView
         android:id="@+id/detail_annonce_label_description"

@@ -1,5 +1,7 @@
 package com.example.mleroux2017.freestuff.dummy;
 
+import android.util.Log;
+
 import com.example.mleroux2017.freestuff.ControllersFirebase.AnnonceControllerFirebase;
 import com.example.mleroux2017.freestuff.Objects.Annonce;
 import com.example.mleroux2017.freestuff.Objects.Categorie;
@@ -20,7 +22,7 @@ public class DummyContent {
     /**
      * An array of sample (dummy) items.
      */
-    public static final List<Annonce> ITEMS = new ArrayList<Annonce>();
+    public static List<Annonce> ITEMS = new ArrayList<Annonce>();
 
     /**
      * A map of sample (dummy) items, by ID.
@@ -34,9 +36,11 @@ public class DummyContent {
         acf.getAll(new AnnonceControllerFirebase.OnTabListener() {
             @Override
             public void onGetTabListener(ArrayList<Annonce> tab) {
+
                 if(tab.size()>0){
-                    for (int i = 1; i <= tab.size(); i++) {
+                    for (int i = 0; i <tab.size(); i++) {
                         addItem(tab.get(i));
+
                     }
                 }
             }
@@ -67,4 +71,7 @@ public class DummyContent {
         return builder.toString();
     }
 
+    public void deleteItems() {
+        ITEMS.clear();
+    }
 }

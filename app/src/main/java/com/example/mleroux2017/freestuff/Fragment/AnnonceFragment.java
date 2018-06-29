@@ -1,18 +1,29 @@
 package com.example.mleroux2017.freestuff.Fragment;
 
+import android.app.LauncherActivity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.mleroux2017.freestuff.Objects.Annonce;
 import com.example.mleroux2017.freestuff.R;
 import com.example.mleroux2017.freestuff.dummy.DummyContent;
+import com.google.common.collect.ObjectArrays;
+
+import org.parceler.Parcels;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -23,25 +34,28 @@ import com.example.mleroux2017.freestuff.dummy.DummyContent;
 public class AnnonceFragment extends Fragment {
 
     // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
+    private static final String LIST_ITEM ="liste item";
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
-
-    /**
+    private List<Annonce> listItems;
+      /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
     public AnnonceFragment() {
+
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static AnnonceFragment newInstance(int columnCount) {
+    public static AnnonceFragment newInstance(List<Annonce> listeResults) {
         AnnonceFragment fragment = new AnnonceFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
+
+        args.putParcelable(LIST_ITEM, Parcels.wrap(listeResults));
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -49,29 +63,28 @@ public class AnnonceFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
+
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            listItems = Parcels.unwrap(getArguments().getParcelable(LIST_ITEM));
+        }
         View view = inflater.inflate(R.layout.fragment_annonce_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-            DummyContent dc = new DummyContent();
-            dc.init();
-            recyclerView.setAdapter(new MyAnnonceRecyclerViewAdapter(dc.ITEMS, mListener));
+            Log.i("DC", "onCreateView: "+listItems);
+            recyclerView.setAdapter(new MyAnnonceRecyclerViewAdapter(listItems, mListener));
         }
         return view;
     }
@@ -94,6 +107,7 @@ public class AnnonceFragment extends Fragment {
         mListener = null;
     }
 
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -108,4 +122,6 @@ public class AnnonceFragment extends Fragment {
         // TODO: Update argument type and name
         void onListFragmentInteraction(Annonce item);
     }
+
+
 }

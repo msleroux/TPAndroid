@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 		
-        Button btnGoToMyAccount = findViewById(R.id.my_account);
+        ImageButton btnGoToMyAccount = findViewById(R.id.my_account);
         btnGoToMyAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +63,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-		
+        ImageButton btnGoToFavourite = findViewById(R.id.btn_goto_favourite);
+        btnGoToFavourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,MyFavoriteActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

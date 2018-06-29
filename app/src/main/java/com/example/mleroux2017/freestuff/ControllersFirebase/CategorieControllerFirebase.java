@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 
+import com.example.mleroux2017.freestuff.Objects.Adresse;
 import com.example.mleroux2017.freestuff.Objects.Categorie;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -60,6 +61,27 @@ public class CategorieControllerFirebase {
               
    }
 
+
+    public static void getById(String idCategorie, final OnValueListener listener){
+        db.collection("categories").document(idCategorie)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.isSuccessful()){
+                            Categorie cat = null;
+                            DocumentSnapshot document = task.getResult();
+                            if(document.exists()){
+                                String titre = document.getString("titre");
+                                String id = document.getId();
+                                cat= new Categorie(id,titre);
+                            }
+                            listener.onGetValueListener(cat);
+                        }
+                    }
+                });
+    }
+
     public static void getAll(final OnTabListener listener) {
         db.collection("categories")
                 .get()
@@ -83,6 +105,7 @@ public class CategorieControllerFirebase {
    public interface OnTabListener{
        void onGetTabListener(ArrayList<Categorie> tab);
    }
+
 
 
 

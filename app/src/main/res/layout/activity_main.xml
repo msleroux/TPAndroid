@@ -19,21 +19,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/give_ter"/>
 
     <ImageButton
         android:id="@+id/btnAddAnnonce"
-        android:onClick="onClickAddAnnonce"
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@color/prjOrange"
+        android:background="@android:color/holo_green_light"
+        android:onClick="onClickAddAnnonce"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="@id/liste_annonces"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.295"
         app:srcCompat="@android:drawable/ic_menu_add" />
 
 
@@ -41,32 +42,50 @@
         android:id="@+id/liste_annonces"
         android:layout_width="72dp"
         android:layout_height="72dp"
-        android:layout_marginTop="8dp"
         android:background="@color/colorAccent"
         app:layout_constraintLeft_toRightOf="@id/btnAddAnnonce"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btnAddAnnonce"
         app:srcCompat="@android:drawable/ic_menu_search" />
-		
-		<Button
+
+    <ImageButton
         android:id="@+id/my_account"
-        android:text="Gestion de mon Compte"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/liste_annonces"
-        app:layout_constraintBottom_toTopOf="@id/gestion_camera"/>
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:background="@color/btn_login"
+        android:src="@android:drawable/ic_menu_myplaces"
+        android:text="Mon Compte"
+        app:layout_constraintBottom_toTopOf="@id/gestion_camera"
+        app:layout_constraintLeft_toLeftOf="@id/liste_annonces"
+        app:layout_constraintRight_toRightOf="@id/liste_annonces"
+        app:layout_constraintTop_toBottomOf="@id/liste_annonces" />
 
     <Button
         android:id="@+id/gestion_camera"
-        android:text="Test de la caméra"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:background="@android:color/holo_purple"
+        android:text="Caméra"
+        android:textColor="@color/white"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/my_account"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/my_account" />
+
+
+    <ImageButton
+        android:id="@+id/btn_goto_favourite"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/holo_red_light"
+        android:src="@android:drawable/star_big_on"
+        android:text="Mes Favoris"
+        app:layout_constraintBottom_toBottomOf="@id/my_account"
+        app:layout_constraintBottom_toTopOf="@id/gestion_camera"
+        app:layout_constraintLeft_toLeftOf="@id/btnAddAnnonce"
+        app:layout_constraintRight_toRightOf="@id/btnAddAnnonce"
+        app:layout_constraintTop_toBottomOf="@+id/btnAddAnnonce" />
 
 
 </android.support.constraint.ConstraintLayout>

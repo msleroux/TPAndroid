@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/prjBleu"
     tools:context=".Activity.ResultActivity">
 
-    <fragment
+    <FrameLayout
         android:id="@+id/first"
-        android:name="com.example.mleroux2017.freestuff.Fragment.AnnonceFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

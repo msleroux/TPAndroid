@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/prjBleu"
     tools:context="com.example.mleroux2017.freestuff.Activity.AddAnnonce">
 
 
@@ -14,6 +15,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Titre de l'annonce"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:textColorHint="@android:color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="@id/editTitre"
@@ -24,6 +28,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+
+        android:textColor="@color/white"
+        android:textColorHint="@android:color/white"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@id/titre"
         />
@@ -33,6 +40,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Description"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:textColorHint="@android:color/white"
         app:layout_constraintTop_toTopOf="@id/editDescription"
         app:layout_constraintLeft_toLeftOf="@id/titre"
        app:layout_constraintRight_toRightOf="@id/titre"
@@ -43,6 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:textColor="@color/white"
         app:layout_constraintRight_toRightOf="@id/editTitre"
         app:layout_constraintLeft_toLeftOf="@id/editTitre"
         app:layout_constraintTop_toBottomOf="@id/editTitre"/>
@@ -52,6 +63,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/radio_grp"
+
         app:layout_constraintTop_toBottomOf="@id/editDescription"
         app:layout_constraintLeft_toLeftOf="@id/titre"
         app:layout_constraintRight_toRightOf="@id/editTitre"
@@ -61,19 +73,31 @@
         <RadioButton android:id="@+id/radio_neuf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@android:color/white"
+            android:textStyle="bold"
             android:text="Neuf" />
         <RadioButton android:id="@+id/radio_bon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:textColorHint="@android:color/white"
             android:text="Bon état"/>
         <RadioButton android:id="@+id/radio_moyen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@android:color/white"
             android:text="Etat Moyen"/>
         <RadioButton android:id="@+id/radio_use"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:text="Usé"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@android:color/white"
             />
     </RadioGroup>
 
@@ -85,6 +109,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date de l'échange"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:textColorHint="@android:color/white"
         app:layout_constraintTop_toTopOf="@id/btnDate"
         app:layout_constraintLeft_toLeftOf="@id/titre"
         app:layout_constraintRight_toRightOf="@id/titre"
@@ -95,6 +122,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/pick_time"
+        android:background="@color/colorAccent"
         android:layout_margin="20dp"
         android:onClick="showTimePickerDialog"
         app:layout_constraintLeft_toRightOf="@id/btnDate"
@@ -105,16 +133,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/pick_date"
+        android:background="@color/colorAccent"
         android:onClick="showDatePickerDialog"
         app:layout_constraintLeft_toLeftOf="@id/editTitre"
         app:layout_constraintRight_toLeftOf="@id/btnTime"
         app:layout_constraintTop_toTopOf="@id/btnTime"/>
 
+    <TextView
+        android:id="@+id/textspinner"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sélectionner une catégorie :"
+        android:textColor="@color/colorAccent"
+        android:textColorHint="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/btnDate"
+        app:layout_constraintLeft_toLeftOf="@id/date"
+
+        android:layout_marginTop="20dp"/>
 
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="368dp"
-        android:background="@color/prjBleu"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -124,9 +164,11 @@
 
     <ImageButton
         android:id="@+id/btnAdresse"
+
         android:layout_width="80dp"
         android:layout_height="80dp"
-        app:srcCompat="@drawable/add_address"
+        android:background="@color/prjBleu"
+        android:src="@android:drawable/ic_dialog_map"
         app:layout_constraintTop_toBottomOf="@id/spinner"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -134,6 +176,19 @@
         />
 
 
+    <TextView
+        android:id="@+id/textAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lieu de l'échange"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:textColorHint="@android:color/white"
+        app:layout_constraintTop_toTopOf="@id/btnAdresse"
+        app:layout_constraintTop_toBottomOf="@id/spinner"
+        app:layout_constraintLeft_toLeftOf="@id/textspinner"
+
+        android:layout_marginTop="20dp"/>
 
     <Button
         android:id="@+id/btnValider"
@@ -143,6 +198,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="VALIDER"
+        android:background="@color/colorAccent"
         android:onClick="onValiderAnnonceCliked"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
