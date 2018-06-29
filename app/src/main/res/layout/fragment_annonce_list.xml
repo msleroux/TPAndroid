@@ -6,9 +6,11 @@
     android:name="com.example.mleroux2017.freestuff.AnnonceFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+	
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
+
     app:layoutManager="LinearLayoutManager"
-	android:background="@color/colorPrimary"
+	android:background="@color/prjBleu"
     tools:context=".Fragment.AnnonceFragment"
     tools:listitem="@layout/fragment_annonce" />

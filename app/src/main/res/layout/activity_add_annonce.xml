@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/prjBleu"
+    android:background="@drawable/give_transp"
     tools:context="com.example.mleroux2017.freestuff.Activity.AddAnnonce">
 
 
@@ -17,7 +17,6 @@
         android:text="Titre de l'annonce"
         android:textStyle="bold"
         android:textColor="@color/colorAccent"
-        android:textColorHint="@android:color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="@id/editTitre"
@@ -28,9 +27,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-
-        android:textColor="@color/white"
-        android:textColorHint="@android:color/white"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@id/titre"
         />
@@ -42,7 +38,6 @@
         android:text="Description"
         android:textStyle="bold"
         android:textColor="@color/colorAccent"
-        android:textColorHint="@android:color/white"
         app:layout_constraintTop_toTopOf="@id/editDescription"
         app:layout_constraintLeft_toLeftOf="@id/titre"
        app:layout_constraintRight_toRightOf="@id/titre"
@@ -53,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:textColor="@color/white"
+
         app:layout_constraintRight_toRightOf="@id/editTitre"
         app:layout_constraintLeft_toLeftOf="@id/editTitre"
         app:layout_constraintTop_toBottomOf="@id/editTitre"/>
